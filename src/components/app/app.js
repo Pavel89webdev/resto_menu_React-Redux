@@ -12,6 +12,17 @@ const App = () => {
                 <Switch>
                     <Route exact path="/" component={MainPage}/>
                     <Route path="/cart" component={CartPage}/>
+                    <Route path="/:id" render={
+                        (({match, location, history}) => {
+
+                            console.log(match)
+                            const id = match.params.id
+
+                            return (
+                                <MainPage id={id}/>
+                            )
+                        })
+                    } />
                 </Switch>
         </div>
     )

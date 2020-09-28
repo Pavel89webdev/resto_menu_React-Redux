@@ -12,7 +12,15 @@ const menuRequested = () => {
     }
 }
 
+const serverError = () => {
+    return {
+        type: 'SERVER_ERROR',
+        serverError: true
+    }
+}
+
 export {
     menuLoaded,
-    menuRequested
+    menuRequested,
+    serverError
 };

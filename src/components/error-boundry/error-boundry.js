@@ -1,21 +1,34 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import Error from '../error';
+import { serverError } from '../../actions';
 
-export default class ErrorBoundry extends Component {
-
-    state = {
-        error: false
-    }
+class ErrorBoundry extends Component {
 
     componentDidCatch(){
-        this.setState({ error: true });
+        console.log('error is detected');
+        this.props.serverError();
     }
 
     render() {
-        if(this.state.error){
+        if(this.props.error){
             return <Error/>
         }
 
         return this.props.children;
     }
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        error: state.serverError
+    }       
+}
+
+const mapReduseToProps = {
+    serverError
+}
+    
+
+export default connect(mapStateToProps, mapReduseToProps)(ErrorBoundry)

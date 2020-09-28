@@ -1,9 +1,9 @@
 import React from 'react';
 import MenuList from '../menu-list';
 
-const MainPage = () => {
+const MainPage = ({id = null}) => {
     return (
-        <MenuList/>
+        <MenuList itemId={id}/>
     )
 }
 
