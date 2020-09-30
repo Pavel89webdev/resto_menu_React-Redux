@@ -1,5 +1,5 @@
 import store from '../store';
-import { serverError } from '../actions';
+import { serverError, succesOrder } from '../actions';
 import reduser from '../reducers';
 
 
@@ -23,6 +23,28 @@ class RestoService {
 
     async getMenuItem(id){
         return await this.getResourse(`/menu/${id}`);
+    }
+
+    async setOrder(order){
+        await fetch(
+            `${this._apiBase}/orders/`,
+            {
+                method: 'POST',
+                body: JSON.stringify(order),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+        .then( (response) => response.json())
+        .then( (json) => {
+            store.dispatch(succesOrder())
+            console.log("Success order:", json)})
+        .catch( (error) => {
+            console.log(error);
+        })
+        .finally( (f) => {
+            console.log('fetch is stopped!')})
     }
 }
 

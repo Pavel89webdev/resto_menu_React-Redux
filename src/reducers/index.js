@@ -1,8 +1,15 @@
+// import RestoService from '../services/resto-service';
+
+// const restoservice = new RestoService();
+
+
 const initialState = {
     menu: [],
     loading: true,
     serverError: false,
-    items: []
+    items: [],
+    totalCost: 0,
+    succesOrder: false
 }
 
 const reduser = (state = initialState, action) => {
@@ -33,7 +40,25 @@ const reduser = (state = initialState, action) => {
                 title: item.title,
                 price: item.price,
                 url: item.url,
-                id: item.id
+                id: item.id,
+                count: 1
+            }
+
+            const idIndexMatch = state.items.findIndex( item => item.id === id)
+            if(idIndexMatch > -1){
+
+                let newItems = [...state.items];
+                ++newItems[idIndexMatch].count;
+                newItems[idIndexMatch].price = newItems[idIndexMatch].price + newItem.price;
+                
+                return {
+                    ...state,
+                    items: [
+                        ...newItems
+                    ],
+                    totalCost: state.totalCost + newItem.price,
+                    succesOrder: false
+                }
             }
 
             return {
@@ -41,7 +66,9 @@ const reduser = (state = initialState, action) => {
                 items: [
                     ...state.items,
                     newItem
-                ]
+                ],
+                totalCost: state.totalCost + newItem.price,
+                succesOrder: false
             };
         case 'ITEM_REMOVE_FROM_CART':
             const index = action.payload;
@@ -53,6 +80,14 @@ const reduser = (state = initialState, action) => {
                     ...state.items.filter( (item, index) => index !== itemIndex )
                 ]
             }
+        case 'ORDER_IS_SUBMIT':
+            return state;
+        case 'SUCCES_ORDER':
+            console.log('action SUCCES_ORDER is runing');
+            return {
+                ...state,
+                succesOrder: true
+            };
         default:
             return state;
     }

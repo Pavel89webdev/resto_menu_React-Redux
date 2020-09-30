@@ -33,10 +33,24 @@ const deleteFromCart = (id) => {
     }
 }
 
+const submitOrder = () => {
+    return {
+        type: 'ORDER_IS_SUBMIT',
+    }
+}
+
+const succesOrder = () => {
+    return {
+        type: 'SUCCES_ORDER',
+    }
+}
+
 export {
     menuLoaded,
     menuRequested,
     serverError,
     adedToCart,
-    deleteFromCart
+    deleteFromCart,
+    submitOrder,
+    succesOrder
 };
